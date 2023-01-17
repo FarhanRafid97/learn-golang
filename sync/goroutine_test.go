@@ -1,4 +1,4 @@
-package goroutines_test
+package sync
 
 import (
 	"fmt"
