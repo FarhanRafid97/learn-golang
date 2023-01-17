@@ -2,6 +2,7 @@ package sync
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 	"time"
 )
@@ -20,5 +21,22 @@ func TestTimerAfter(t *testing.T) {
 
 	time := <- channel
 	fmt.Println(time)
+
+
+}
+
+func TestTimerAfterFunc(t *testing.T) {
+	group := sync.WaitGroup{}
+	group.Add(1)
+
+	time.AfterFunc(5 * time.Second,func() {
+		fmt.Println(time.Now())
+		group.Done()
+	})
+	
+	fmt.Println(time.Now())
+
+	group.Wait()
+	fmt.Println("done")
 
 }
