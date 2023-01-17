@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func RunAsynchronus (group *sync.WaitGroup){
+func RunAsynchronus(group *sync.WaitGroup) {
 	defer group.Done()
 
 	group.Add(1)
@@ -19,11 +19,11 @@ func RunAsynchronus (group *sync.WaitGroup){
 func TestSynchronus(t *testing.T) {
 
 	group := *&sync.WaitGroup{}
-	
-	for i :=0 ; i< 100;i++{
+
+	for i := 0; i < 100; i++ {
 		go RunAsynchronus(&group)
 	}
-	
+
 	group.Wait()
 	fmt.Println("SElesai")
 }
