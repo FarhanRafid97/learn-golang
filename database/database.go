@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -13,7 +12,7 @@ func GetConnection() *sql.DB {
 	if err != nil {
 		panic(err)
 	} else if err = db.Ping(); err != nil {
-		fmt.Println("aa")
+
 		panic(err)
 	}
 

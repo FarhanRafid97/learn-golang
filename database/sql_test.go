@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"testing"
 	"time"
@@ -25,13 +26,14 @@ func TestSqlExec(t *testing.T) {
 }
 
 type User struct {
-	id                     int
-	name                   string
-	email                  string
-	balance                int
-	rating                 float32
-	created_at, birth_date time.Time
-	married                bool
+	id         int
+	name       string
+	email      sql.NullString
+	balance    int
+	rating     float32
+	created_at time.Time
+	birth_date sql.NullTime
+	married    bool
 }
 
 func TestGetData(t *testing.T) {
@@ -107,23 +109,35 @@ func TestQuerry(t *testing.T) {
 
 	for rows.Next() {
 		var id int
-		var name, email string
+		var name string
+		var email sql.NullString
 		var married bool
 		var rating float32
 		var balance int
-		var created_at, birth_date time.Time
+		var birth_date sql.NullTime
+		var created_at time.Time
 
 		err := rows.Scan(&id, &name, &email, &balance, &rating, &married, &created_at, &birth_date)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(created_at)
-		fmt.Println(balance)
-		fmt.Println(rating)
+
 		arr = append(arr, User{id: id, name: name, email: email, married: married, created_at: created_at, birth_date: birth_date})
+
+		fmt.Println("================")
+		fmt.Println("id 	:", id)
+		fmt.Println("name :", name)
+		if email.Valid {
+			fmt.Println("email	:", email.String)
+		}
+		if birth_date.Valid {
+			fmt.Println("birth_date	:", birth_date.Time)
+		}
+		fmt.Println("married	:", married)
+		fmt.Println("created_at	", created_at)
+		fmt.Println("================")
 
 	}
 	rows.Close()
-	fmt.Println(arr)
 
 }
