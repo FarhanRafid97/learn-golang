@@ -77,3 +77,14 @@ func TestContextWithDeadline(t *testing.T) {
 	time.Sleep(3 * time.Second)
 	fmt.Println("TOtal go routine", runtime.NumGoroutine())
 }
+
+func TestPlus(t *testing.T) {
+	result := 0
+	plus := &result
+
+	for i := 0; i < 10; i++ {
+		*plus++
+	}
+	fmt.Println(result)
+
+}
